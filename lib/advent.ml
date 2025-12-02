@@ -242,3 +242,11 @@ let print_map map =
   done;
   Out_channel.newline stdout
 ;;
+
+let is_even n = if n mod 2 = 0 then true else false
+
+let rec sumlist l =
+  match l with
+  | [] -> 0 (* Base case: the sum of an empty list is 0 *)
+  | hd :: tl -> hd + sumlist tl (* Recursive case: add the head to the sum of the tail *)
+;;
