@@ -13,13 +13,7 @@ let find_max_mod (maxi : int) (bat : int list) : int * int =
   aux bat 0 0
 ;;
 
-let find_bat_pt1 (bat : int list) : int =
-  let tens, i = find_max_mod 1 bat in
-  let ones, _ = List.drop bat (i + 1) |> find_max_mod 0 in
-  (tens * 10) + ones
-;;
-
-let find_bat_pt2 (bat : int list) : int =
+let find_bat (count : int) (bat : int list) : int =
   let rec aux (rest : int list) (place : int) (acc : int) : int =
     if place < 0
     then acc
@@ -28,7 +22,7 @@ let find_bat_pt2 (bat : int list) : int =
       let v = x * Int.pow 10 place in
       aux (List.drop rest (i + 1)) (place - 1) (acc + v))
   in
-  aux bat 11 0
+  aux bat (count - 1) 0
 ;;
 
 let () =
@@ -37,7 +31,7 @@ let () =
     |> List.map ~f:(fun str ->
       String.to_list str |> List.map ~f:(fun c -> Char.to_int c - 48))
   in
-  let res = List.map batteries ~f:find_bat_pt1 |> sumlist in
-  let res2 = List.map batteries ~f:find_bat_pt2 |> sumlist in
+  let res = List.map batteries ~f:(find_bat 2) |> sumlist in
+  let res2 = List.map batteries ~f:(find_bat 12) |> sumlist in
   Printf.printf "\nPart 1: %i\nPart 2: %i\n" res res2
 ;;
