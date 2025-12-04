@@ -1,6 +1,6 @@
 (executables
- (public_names Runner DayTemplate Day01 Day02 Day03)
- (names Runner DayTemplate Day01 Day02 Day03)
+ (public_names Runner DayTemplate Day01 Day02 Day03 Day04)
+ (names Runner DayTemplate Day01 Day02 Day03 Day04)
  (preprocess
   (pps ppx_jane))
  (libraries advent core core_unix))
