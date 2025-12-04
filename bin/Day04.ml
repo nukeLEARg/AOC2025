@@ -19,22 +19,15 @@ let clear_paper (omap : char array array) : char array array =
   let height = Array.length map in
   let width = Array.length map.(0) in
   let rec aux ((ox, oy) : int * int) (shift : bool) : unit =
-    if ox >= width
-    then aux (0, oy + 1) shift
-    else if oy >= height && shift
-    then aux (0, 0) false
-    else if oy >= height
-    then ()
-    else (
-      match map.(oy).(ox) with
-      | '.' | 'x' -> aux (ox + 1, oy) shift
-      | '@' ->
-        if check_surround (ox, oy) map < 4
-        then (
-          map.(oy).(ox) <- 'x';
-          aux (ox + 1, oy) true)
-        else aux (ox + 1, oy) shift
-      | _ -> raise (Invalid_argument "Invalid character found in map"))
+    match ox, oy with
+    | x, _ when x >= width -> aux (0, oy + 1) shift
+    | _, y when y >= height -> if shift then aux (0, 0) false else ()
+    | _ ->
+      (match map.(oy).(ox) with
+       | '@' when check_surround (ox, oy) map < 4 ->
+         map.(oy).(ox) <- 'x';
+         aux (ox + 1, oy) true
+       | _ -> aux (ox + 1, oy) shift)
   in
   aux (0, 0) false;
   map
