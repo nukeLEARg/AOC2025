@@ -24,6 +24,13 @@ let print_string_list lst =
   Printf.printf "]\n"
 ;;
 
+let print_char_list2 (chars : char list list) : unit =
+  List.iter chars ~f:(fun clist ->
+    let () = Printf.printf "\n[" in
+    List.iter ~f:(Printf.printf "\"%c\", ") clist;
+    Printf.printf "]\n")
+;;
+
 let print_int_list lst =
   Printf.printf "\n[";
   List.iter ~f:(Printf.printf "%d; ") lst;
@@ -249,4 +256,13 @@ let rec sumlist l =
   match l with
   | [] -> 0 (* Base case: the sum of an empty list is 0 *)
   | hd :: tl -> hd + sumlist tl (* Recursive case: add the head to the sum of the tail *)
+;;
+
+let rec matrix_transpose list_of_lists =
+  match list_of_lists with
+  | [] :: _ -> []
+  | rows ->
+    let first_col = List.map ~f:List.hd_exn rows in
+    let rest_matrix = List.map ~f:List.tl_exn rows in
+    first_col :: matrix_transpose rest_matrix
 ;;
